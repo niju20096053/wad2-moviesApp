@@ -6,6 +6,8 @@ import { getMovie } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
 import useFiltering from "../hooks/useFiltering";
 import MovieFilterUI, { titleFilter } from "../components/movieFilterUI";
+import RemoveFromFavourites from "../components/cardIcons/removeFromFavourites";
+import WriteReview from "../components/cardIcons/writeReview";
 
 const titleFiltering = {
   name: "title",
@@ -50,7 +52,6 @@ const FavouriteMoviesPage = () => {
     ? filterFunction(allFavourites)
     : [];
 
-  const toDo = () => true;
 
   const changeFilterValues = (type, value) => {
     const newf = { name: type, value: value };
@@ -61,10 +62,17 @@ const FavouriteMoviesPage = () => {
 
   return (
     <>
-      <PageTemplate
+       <PageTemplate
         title="Favourite Movies"
         movies={displayMovies}
-        selectFavourite={toDo}
+        action={(movie) => {
+          return (
+            <>
+              <RemoveFromFavourites movie={movie} />
+              <WriteReview movie={movie} />
+            </>
+          );
+        }}
       />
       <MovieFilterUI
         filterInputChange={changeFilterValues}
